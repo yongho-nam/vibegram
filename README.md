@@ -1,8 +1,10 @@
-# Vibegram (React + FastAPI + SQLite)
+# 바이브그램 (React + FastAPI)
 
 인스타그램 클론 풀스택 프로젝트.
 
 **프로덕션 URL**: https://vibe.onadn.co.kr
+
+로컬: **SQLite** · 서버: **PostgreSQL** (`APP_ENV` / `DATABASE_URL`로 자동 선택, Alembic 마이그레이션)
 
 명세: 루트의 `front.md`, `backend.md`, `db.md`, `guide.md` 참고.
 
@@ -16,7 +18,7 @@
 | 도메인 | https://vibe.onadn.co.kr |
 | 프론트엔드 | Vite 빌드 → nginx 정적 서빙 (`frontend/dist/`) |
 | 백엔드 | FastAPI + uvicorn, systemd 서비스로 상시 운영 |
-| DB | SQLite (`backend/instagram.db`) |
+| DB | SQLite (`backend/instagram.db`) — 다중 워커 시 PostgreSQL 전환 권장 |
 | 리버스 프록시 | nginx (HTTP→HTTPS 리다이렉트, SPA 라우팅, `/api` 프록시) |
 | SSL | Let's Encrypt |
 
@@ -54,8 +56,8 @@ cd frontend && npm run build && cd ..
 # 백엔드 의존성 변경 시
 cd backend && .venv/bin/pip install -r requirements.txt && cd ..
 
-# DB 마이그레이션
-cd backend && .venv/bin/alembic upgrade head && cd ..
+# DB 마이그레이션 (venv Python 사용)
+cd backend && .venv/bin/python -m alembic upgrade head && cd ..
 
 # 백엔드 재시작
 sudo systemctl restart vibegram-backend
@@ -68,29 +70,45 @@ sudo systemctl restart vibegram-backend
 ### 요구사항
 
 - Node.js 18+
-- Python 3.11+
+- Python 3.11+ (Windows는 64-bit 권장)
 
-### 빠른 시작
+### 빠른 시작 (권장)
+
+프로젝트 **루트**에서:
 
 ```bash
-# 1. 프론트엔드 의존성 설치
-cd frontend && npm install && cd ..
-
-# 2. 백엔드 가상환경 + 의존성
-cd backend
-python3.11 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-
-# 3. 환경 변수 설정
-cp .env.example .env   # 내용 수정
-
-# 4. DB 초기화
-.venv/bin/alembic upgrade head
-cd ..
-
-# 5. 개발 서버 동시 실행 (루트에서)
+npm install
 npm run dev
 ```
+
+- `npm install`: 프론트 의존성 + 백엔드 venv·pip·`alembic upgrade head` (SQLite)
+- `npm run dev`: Vite(5173) + Uvicorn(8000) 동시 실행
+
+### 수동 설정 (backend)
+
+```bash
+cd backend
+python -m venv .venv
+# Windows
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+.\migrate.ps1
+# 또는: .\.venv\Scripts\python.exe -m alembic upgrade head
+
+# Linux / macOS
+# python3.11 -m venv .venv && source .venv/bin/activate
+# pip install -r requirements.txt && cp .env.example .env
+# python -m alembic upgrade head
+
+uvicorn app.main:app --reload --port 8000
+```
+
+> 전역 `alembic` 명령은 PATH에 없을 수 있습니다. **venv의 `python -m alembic`** 또는 **`.\migrate.ps1`** 을 사용하세요.
+
+서버(PostgreSQL): `copy .env.production.example .env` 후 `APP_ENV=production`과 `POSTGRES_*`(또는 `DATABASE_URL`) 설정 → 동일하게 `alembic upgrade head`.
+
+루트에서 마이그레이션만: `npm run migrate`
 
 - 프론트: http://localhost:5173
 - 백엔드: http://localhost:8000
@@ -99,9 +117,10 @@ npm run dev
 
 ### 환경 변수
 
-**`backend/.env`**
+**`backend/.env` (로컬)**
 
 ```
+APP_ENV=development
 DATABASE_URL=sqlite:///./instagram.db
 JWT_SECRET=<strong-random-secret>
 JWT_ALGORITHM=HS256
@@ -124,9 +143,9 @@ VITE_API_BASE_URL=/api/v1
 
 ```
 frontend/     Vite + React + TypeScript
-backend/      FastAPI + SQLAlchemy + SQLite
+backend/      FastAPI + SQLAlchemy (SQLite / PostgreSQL)
 uploads/      미디어 저장용 (gitignore됨)
-scripts/      개발용 실행 스크립트
+scripts/      개발·마이그레이션 스크립트
 ```
 
 ## 엔드포인트

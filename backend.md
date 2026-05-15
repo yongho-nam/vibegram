@@ -252,7 +252,7 @@ app/routers/
 
 - `GET /health` — `SELECT 1` 등.
 - 스키마: `alembic upgrade head` 또는 `python scripts/init_sqlite.py`.
-- `.env`: `DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_MIN`, `UPLOAD_DIR`, `FRONTEND_ORIGIN`.
+- `.env`: `APP_ENV`(`development` → SQLite, `production` → PostgreSQL), `DATABASE_URL`(선택·우선), `POSTGRES_*`(production에서 URL 미설정 시), `JWT_SECRET`, `JWT_EXPIRES_MIN`, `UPLOAD_DIR`, `FRONTEND_ORIGIN`.
 
 ---
 

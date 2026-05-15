@@ -8,7 +8,8 @@
 
   alembic upgrade head
 
-`DATABASE_URL`은 `app.config` / `.env` 기본값(`sqlite:///./instagram.db`)을 따릅니다.
+`APP_ENV`·`DATABASE_URL`은 `app.config`를 따릅니다(development 기본 → SQLite).
+서버(PostgreSQL)에서도 동일하게 `alembic upgrade head`를 실행하면 됩니다.
 """
 
 from __future__ import annotations
@@ -22,14 +23,11 @@ if str(BACKEND_ROOT) not in sys.path:
 
 
 def main() -> None:
-    from alembic.config import Config
     from alembic import command
+    from alembic.config import Config
 
-    ini = BACKEND_ROOT / "alembic.ini"
-    cfg = Config(str(ini))
-    # env.py 가 app.config 의 URL 을 쓰므로 여기서는 경로만 지정
-    command.upgrade(cfg, "head")
-    print("OK — alembic upgrade head")
+    command.upgrade(Config(str(BACKEND_ROOT / "alembic.ini")), "head")
+    print("OK - alembic upgrade head")
 
 
 if __name__ == "__main__":

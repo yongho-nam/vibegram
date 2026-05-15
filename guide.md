@@ -35,11 +35,37 @@ my_instagram/
 4. **확장**: `saved_posts`, 검색·해시태그, 스토리, 알림, DM(폴링 후 WebSocket).
 5. **다듬기**: 비공개 계정, 이미지 리사이즈, 레이트 리밋, E2E.
 
-## 4. 환경 변수
+## 4. 환경 변수 · DB (SQLite / PostgreSQL)
 
-**백엔드 `backend/.env`**
+| 환경 | `APP_ENV` | DB | 설정 |
+|------|-----------|-----|------|
+| 로컬 개발 | `development` (기본) | **SQLite** `sqlite:///./instagram.db` | `backend/.env.example` 복사 |
+| 서버 | `production` | **PostgreSQL** (또는 명시적 `DATABASE_URL`) | `backend/.env.production.example` |
+| 테스트 | `test` | SQLite | `backend/tests/conftest.py` |
+
+- `DATABASE_URL`이 있으면 **항상 우선** (로컬에서 Postgres를 쓸 때도 가능).
+- `postgres://` / `postgresql://` URL은 앱·Alembic 모두 `postgresql+psycopg://`로 정규화한다.
+- 스키마 적용: `backend/`에서 **`.\migrate.ps1`** (Windows) 또는 **`.venv/bin/python -m alembic upgrade head`** (Linux). 루트: `npm run migrate`.
+- 전역 `alembic` 명령은 PATH에 없을 수 있음 — **venv Python**을 사용한다.
+
+**백엔드 `.env` (로컬 SQLite)**
 
 ```
+APP_ENV=development
+DATABASE_URL=sqlite:///./instagram.db
+JWT_SECRET=change-me-in-production
+JWT_ALGORITHM=HS256
+JWT_EXPIRES_MINUTES=10080
+UPLOAD_DIR=./uploads
+FRONTEND_ORIGIN=http://localhost:5173
+API_PUBLIC_BASE=http://localhost:8000
+EXPOSE_PASSWORD_RESET_LINK=true
+```
+
+**서버 `.env` (프로덕션 — 현재 EC2, SQLite 예시)**
+
+```
+APP_ENV=development
 DATABASE_URL=sqlite:////var/vibe/onadn.co.kr/backend/instagram.db
 JWT_SECRET=<32바이트 이상 랜덤 문자열>
 JWT_ALGORITHM=HS256
@@ -50,7 +76,18 @@ API_PUBLIC_BASE=https://vibe.onadn.co.kr
 EXPOSE_PASSWORD_RESET_LINK=false
 ```
 
-**프론트 `frontend/.env`** (프로덕션)
+**서버 `.env` (PostgreSQL 전환 시)** — `backend/.env.production.example` 참고
+
+```
+APP_ENV=production
+POSTGRES_USER=instagram
+POSTGRES_PASSWORD=...
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_DB=instagram
+```
+
+**프론트 `.env`**
 
 ```
 VITE_API_BASE_URL=/api/v1
@@ -61,7 +98,7 @@ VITE_API_BASE_URL=/api/v1
 ## 5. 로컬 실행 체크리스트
 
 - [x] Python 3.11 가상환경 생성 및 `requirements.txt` 설치
-- [x] `alembic upgrade head`
+- [x] `alembic upgrade head` (venv Python)
 - [x] 백엔드 CORS에 프론트 오리진 등록
 - [x] 프론트 의존성 설치 후 dev 서버
 - [ ] 회원가입 → 로그인 → 이미지 업로드 게시물 1건 확인
@@ -95,7 +132,7 @@ VITE_API_BASE_URL=/api/v1
 ```bash
 git pull
 cd frontend && npm run build && cd ..
-cd backend && .venv/bin/alembic upgrade head && cd ..
+cd backend && .venv/bin/python -m alembic upgrade head && cd ..
 sudo systemctl restart vibegram-backend
 sudo systemctl reload nginx
 ```

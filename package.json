@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "dev": "node scripts/install-backend.mjs && node scripts/dev.mjs",
-    "build": "npm run build -w instagram-clone-frontend"
+    "build": "npm run build -w instagram-clone-frontend",
+    "migrate": "node scripts/install-backend.mjs && node scripts/migrate.mjs"
   }
 }

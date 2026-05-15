@@ -4,6 +4,7 @@ dist/
 *.db
 *.db-shm
 *.db-wal
+backend/instagram.db*
 __pycache__/
 *.py[cod]
 .venv/

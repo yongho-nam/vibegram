@@ -258,7 +258,7 @@ hashtags ─── post_hashtags ─── posts
 ## 4. 마이그레이션 (Alembic)
 
 - **도구**: Alembic 1.x — `backend/alembic/`, `backend/alembic.ini`, 초기 리비전 `backend/alembic/versions/548db34ab012_initial_schema.py`.
-- **환경**: `alembic/env.py`가 `app.config.settings.database_url`과 `app.database.engine`(FK pragma·WAL 동일)을 사용한다.
+- **환경**: `alembic/env.py`가 `app.config.settings.database_url`을 사용한다. `APP_ENV=development`(기본) → SQLite, `APP_ENV=production` → `DATABASE_URL` 또는 `POSTGRES_*`로 PostgreSQL. SQLite만 `render_as_batch=True`(ALTER 재생성), PostgreSQL은 일반 DDL.
 - **앱 기동**: `uvicorn`은 `create_all`을 호출하지 않는다. 스키마는 **`alembic upgrade head`** 로만 적용한다.
 
 ### 4.1 자주 쓰는 명령 (`backend/` 에서)
