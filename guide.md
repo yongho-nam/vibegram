@@ -37,36 +37,75 @@ my_instagram/
 
 ## 4. 환경 변수
 
-**백엔드 `.env`(예)**
+**백엔드 `backend/.env`**
 
 ```
-DATABASE_URL=sqlite:///./instagram.db
-JWT_SECRET=change-me-in-production
+DATABASE_URL=sqlite:////var/vibe/onadn.co.kr/backend/instagram.db
+JWT_SECRET=<32바이트 이상 랜덤 문자열>
 JWT_ALGORITHM=HS256
-JWT_EXPIRES_MINUTES=60
-UPLOAD_DIR=./uploads
-FRONTEND_ORIGIN=http://localhost:5173
+JWT_EXPIRES_MINUTES=10080
+UPLOAD_DIR=/var/vibe/onadn.co.kr/uploads
+FRONTEND_ORIGIN=https://vibe.onadn.co.kr
+API_PUBLIC_BASE=https://vibe.onadn.co.kr
+EXPOSE_PASSWORD_RESET_LINK=false
 ```
 
-**프론트 `.env`**
+**프론트 `frontend/.env`** (프로덕션)
 
 ```
-VITE_API_BASE_URL=http://localhost:8000/api/v1
+VITE_API_BASE_URL=/api/v1
 ```
+
+로컬 개발 시 `FRONTEND_ORIGIN=http://localhost:5173`, `VITE_API_BASE_URL=http://localhost:8000/api/v1` 로 변경.
 
 ## 5. 로컬 실행 체크리스트
 
-- [ ] Python 가상환경 생성 및 `requirements.txt` 설치  
-- [ ] `alembic upgrade head`  
-- [ ] 백엔드에서 CORS에 프론트 오리진 등록  
-- [ ] 프론트 의존성 설치 후 dev 서버  
-- [ ] 회원가입 → 로그인 → 이미지 업로드 게시물 1건 확인  
+- [x] Python 3.11 가상환경 생성 및 `requirements.txt` 설치
+- [x] `alembic upgrade head`
+- [x] 백엔드 CORS에 프론트 오리진 등록
+- [x] 프론트 의존성 설치 후 dev 서버
+- [ ] 회원가입 → 로그인 → 이미지 업로드 게시물 1건 확인
 
-## 6. 배포 참고
+## 6. 프로덕션 배포 (현재 적용 완료)
 
-- SQLite는 **단일 프로세스**에 적합; 다중 워커에는 PostgreSQL 등 이전 권장.
-- 정적 미디어는 CDN 또는 객체 스토리지로 이전 가능하도록 `storage_path` 추상화 유지.
-- `JWT_SECRET`, 파일 업로드 크기·타입 검증, HTTPS는 프로덕션 필수.
+**환경**: Amazon Linux 2023 / EC2 / `vibe.onadn.co.kr`
+
+### 서버 구성
+
+| 구성 요소 | 설정 |
+|-----------|------|
+| Python | 3.11 (`python3.11 -m venv .venv`) |
+| 백엔드 프로세스 관리 | systemd (`vibegram-backend.service`) |
+| 리버스 프록시 | nginx 1.30 |
+| SSL | Let's Encrypt (`/etc/letsencrypt/live/vibe.onadn.co.kr/`) |
+| 정적 파일 루트 | `/var/vibe/onadn.co.kr/frontend/dist` |
+| 백엔드 바인드 | `127.0.0.1:8000` (외부 직접 노출 없음) |
+
+### nginx 라우팅 규칙
+
+```
+/api/*    → proxy_pass http://127.0.0.1:8000/api/
+/media/*  → proxy_pass http://127.0.0.1:8000/media/
+/health   → proxy_pass http://127.0.0.1:8000/health
+/*        → try_files $uri $uri/ /index.html  (SPA)
+```
+
+### 배포 후 재시작 절차
+
+```bash
+git pull
+cd frontend && npm run build && cd ..
+cd backend && .venv/bin/alembic upgrade head && cd ..
+sudo systemctl restart vibegram-backend
+sudo systemctl reload nginx
+```
+
+### 주의사항
+
+- SQLite는 **단일 프로세스**에 적합; uvicorn 워커를 늘릴 경우 PostgreSQL 전환 권장.
+- `uploads/` 디렉토리는 `.gitignore`됨 — 서버에서 별도 관리.
+- `*.db-shm`, `*.db-wal` (SQLite WAL 파일)도 `.gitignore` 처리됨.
+- `JWT_SECRET`은 절대 커밋하지 않음 (`.env`는 `.gitignore`에 포함).
 
 ## 7. 이슈·우선순위 합의
 
