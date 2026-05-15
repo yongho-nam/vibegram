@@ -1,0 +1,51 @@
+.wrap {
+  position: relative;
+}
+
+.toggle {
+  border: 0;
+  background: none;
+  padding: 8px;
+  margin: -8px;
+  color: var(--ig-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  min-width: 160px;
+  padding: 4px 0;
+  border: 1px solid var(--ig-border);
+  border-radius: 8px;
+  background: var(--ig-surface);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: none;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ig-error, #ed4956);
+  cursor: pointer;
+}
+
+.item:hover {
+  background: var(--ig-hover);
+}
+
+.item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

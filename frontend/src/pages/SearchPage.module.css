@@ -1,0 +1,108 @@
+.root {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ig-bg);
+  border-radius: 8px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+}
+
+.searchBar:focus-within {
+  border-color: var(--ig-border);
+}
+
+.icon {
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+.input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+}
+
+.clear {
+  border: 0;
+  background: none;
+  color: var(--ig-secondary);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+  margin: 20px 0 12px;
+  border-bottom: 1px solid var(--ig-border);
+}
+
+.tab {
+  border: 0;
+  background: none;
+  padding: 12px 0;
+  font-weight: 600;
+  color: var(--ig-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.tab[data-active="true"] {
+  color: var(--ig-primary);
+  border-bottom-color: var(--ig-primary);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row,
+.tagRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tagIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--ig-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ig-primary);
+}
+
+.un {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dn {
+  font-size: 14px;
+  color: var(--ig-secondary);
+}
+
+.hint {
+  padding: 16px 4px;
+  font-size: 14px;
+  color: var(--ig-secondary);
+}

@@ -1,0 +1,29 @@
+.root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: var(--ig-bg);
+}
+
+.code {
+  font-size: 96px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -4px;
+}
+
+.msg {
+  font-size: 18px;
+  max-width: 360px;
+  margin: 0 0 24px;
+  color: var(--ig-primary);
+}
+
+.link {
+  font-weight: 600;
+  color: var(--ig-link);
+}

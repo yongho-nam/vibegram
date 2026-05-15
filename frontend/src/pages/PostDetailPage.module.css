@@ -1,0 +1,200 @@
+.shell {
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-border);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 935px;
+  margin: 0 auto;
+}
+
+.mTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ig-border);
+}
+
+@media (min-width: 768px) {
+  .mTop {
+    display: none;
+  }
+}
+
+.back {
+  border: 0;
+  background: none;
+  padding: 8px;
+  color: var(--ig-primary);
+}
+
+.mTitle {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.spacer {
+  width: 40px;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 500px;
+  }
+}
+
+.media {
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.img {
+  width: 100%;
+  max-height: min(70vh, 800px);
+  object-fit: contain;
+}
+
+.panel {
+  flex: 0 0 400px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ig-border);
+}
+
+@media (min-width: 768px) {
+  .panel {
+    border-top: 0;
+    border-left: 1px solid var(--ig-border);
+  }
+}
+
+.head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ig-border);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.headSpacer {
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.comments {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  max-height: 360px;
+}
+
+.pinned,
+.commentRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.caption,
+.commentBody {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.captionUser {
+  font-weight: 600;
+  color: var(--ig-primary);
+  text-decoration: none;
+  margin-right: 4px;
+}
+
+.footer {
+  border-top: 1px solid var(--ig-border);
+  padding: 8px 12px 12px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.save {
+  margin-left: auto;
+}
+
+.iconBtn {
+  border: 0;
+  background: none;
+  padding: 8px;
+  color: var(--ig-primary);
+}
+
+.likes {
+  margin: 4px 0 4px 8px;
+  font-size: 14px;
+}
+
+.time {
+  margin: 0 0 8px 8px;
+  font-size: 10px;
+  color: var(--ig-secondary);
+  text-transform: uppercase;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--ig-border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.addInput {
+  flex: 1;
+  border: 0;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+}
+
+.postBtn {
+  border: 0;
+  background: none;
+  color: var(--ig-link);
+  font-weight: 600;
+  opacity: 0.4;
+  cursor: default;
+}
+
+.miss {
+  text-align: center;
+  padding: 48px 16px;
+}

@@ -1,0 +1,141 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ig-z-modal, 1000);
+  background: var(--ig-overlay, rgba(0, 0, 0, 0.65));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .backdrop {
+    align-items: center;
+    padding: 24px;
+  }
+}
+
+.sheet {
+  width: 100%;
+  max-width: 400px;
+  max-height: min(85vh, 560px);
+  background: var(--ig-surface);
+  border-radius: 12px 12px 0 0;
+  border: 1px solid var(--ig-border);
+  border-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .sheet {
+    border-radius: 12px;
+    border-bottom: 1px solid var(--ig-border);
+    max-height: min(80vh, 520px);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--ig-border);
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.close {
+  border: 0;
+  background: none;
+  padding: 8px;
+  margin: -8px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ig-primary);
+  cursor: pointer;
+}
+
+.search {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--ig-border);
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--ig-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  background: var(--ig-bg);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--ig-border);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.row:hover {
+  background: var(--ig-hover);
+}
+
+.row:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.meta {
+  min-width: 0;
+}
+
+.un {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dn {
+  font-size: 13px;
+  color: var(--ig-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hint {
+  padding: 20px 14px;
+  font-size: 14px;
+  color: var(--ig-secondary);
+  text-align: center;
+}
+
+.err {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--ig-error, #ed4956);
+}

@@ -1,0 +1,28 @@
+.root {
+  width: 100%;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.hint {
+  padding: 16px 8px;
+  color: var(--ig-secondary, #737373);
+  font-size: 14px;
+}
+
+.feedFooter {
+  width: 100%;
+  padding: 28px 12px 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.feedCopy {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ig-tertiary, #a8a8a8);
+}

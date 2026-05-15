@@ -1,0 +1,24 @@
+.wordmark {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+  background: linear-gradient(115deg, #f58529 0%, #dd2a7b 48%, #8134af 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@supports not (background-clip: text) {
+  .wordmark {
+    color: var(--ig-primary);
+    background: none;
+  }
+}
+
+.glyph {
+  width: 24px;
+  height: 24px;
+}

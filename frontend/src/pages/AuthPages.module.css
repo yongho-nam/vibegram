@@ -1,0 +1,159 @@
+.split {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  max-width: 935px;
+  width: 100%;
+}
+
+.hero {
+  display: none;
+  position: relative;
+  width: 380px;
+  height: 581px;
+  border-radius: 24px;
+  background: linear-gradient(165deg, #c13584 0%, #e1306c 35%, #fd1d1d 65%, #fcb045 100%);
+  box-shadow: 0 24px 80px rgba(225, 48, 108, 0.35);
+}
+
+@media (min-width: 900px) {
+  .hero {
+    display: block;
+  }
+}
+
+.phone {
+  position: absolute;
+  right: 0;
+  top: 27px;
+  width: 250px;
+  height: 538px;
+}
+
+.screen {
+  position: absolute;
+  inset: 12px 10px 14px 11px;
+  border-radius: 32px;
+  background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.panel {
+  flex: 0 1 350px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.splitSingle {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-border);
+  border-radius: 1px;
+  padding: 32px 40px 28px;
+  text-align: center;
+}
+
+.cardMuted {
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-border);
+  border-radius: 1px;
+  padding: 20px 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.cardMuted a {
+  font-weight: 600;
+}
+
+.logoCenter {
+  margin: 0 auto 24px;
+}
+
+.testHint {
+  font-size: 12px;
+  color: var(--ig-secondary);
+  margin: -12px 0 16px;
+  line-height: 1.4;
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--ig-error);
+  margin: 4px 0 0;
+  text-align: left;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.srLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.input {
+  font-size: 12px;
+  padding: 10px 8px;
+  border: 1px solid var(--ig-border);
+  border-radius: 3px;
+  background: var(--ig-bg);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--ig-secondary);
+}
+
+.primaryBtn {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ig-link);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 16px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.primaryBtn:hover {
+  opacity: 1;
+}
+
+.forgot {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--ig-link);
+}
+
+.lead {
+  color: var(--ig-secondary);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  margin: 0 0 16px;
+}
+
+.terms {
+  font-size: 12px;
+  color: var(--ig-secondary);
+  text-align: center;
+  margin: 8px 0 12px;
+}

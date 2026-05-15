@@ -1,0 +1,48 @@
+.wrap {
+  background: var(--ig-surface);
+  border: 1px solid var(--ig-border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  padding: 16px 0 12px;
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  width: 72px;
+  text-decoration: none;
+  color: var(--ig-primary);
+}
+
+.label {
+  font-size: 12px;
+  max-width: 72px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1023px) {
+  .wrap {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}
